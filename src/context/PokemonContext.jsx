@@ -3,7 +3,7 @@ import { createContext, useContext } from "react";
 
 const PokemonContext = createContext();
 
-export const usePokedex = () => useContext(PokemonContext);
+export const  usePokedex = () => useContext(PokemonContext);
 // eslint-disable-next-line react/prop-types
 const PokemonProvider = ({ children }) => {
   let pokedex = [];
@@ -35,8 +35,8 @@ const PokemonProvider = ({ children }) => {
     return pokedex;
   };
 
-  const getPokemonDetail = async (url) => {
-    const [data, _error] = await pokeApi.getPokemonDetail(url);
+  const getPokemonDetail = async (id) => {
+    const [data, _error] = await pokeApi.getPokemonDetail(id);
     if (_error) {
       throw new Error(_error);
     }
