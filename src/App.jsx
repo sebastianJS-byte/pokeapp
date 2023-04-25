@@ -1,7 +1,7 @@
 import "./App.css";
 import { useEffect, useState } from "react";
 import { usePokedex } from "./context/PokemonContext.jsx";
-import { PokeList } from "./components/PokeList";
+import { GraphPoke, Navbar, PokeList, PokeModal } from "./components";
 
 function App() {
   const { loadPokemons, urls } = usePokedex();
@@ -38,12 +38,14 @@ function App() {
 
   return (
     <div>
-      <div className="navbar bg-zinc-50">
-        <div className="navbar-start"></div>
+      <div className="navbar bg-neutral text-neutral-content">
+        <Navbar />
+        <GraphPoke />
       </div>
       <main className="m-8">
         {loading && "Loading..."}
         <PokeList pokemons={pokemonList} loading={loading} />
+        <PokeModal />
       </main>
     </div>
   );
