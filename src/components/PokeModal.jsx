@@ -1,64 +1,73 @@
-import { useMemo } from "react"
-import { pokeApi } from "../api/pokeApi"
+/* eslint-disable react/prop-types */
+import { useState } from "react";
+import { useEffect } from "react";
+import { pokeApi } from "../api/pokeApi";
+import { usePokedex } from "../context/PokemonContext";
 
-export const PokeModal = ({ id = 4 }) => {
+export const PokeModal = () => {
+  const { idPokemon } = usePokedex();
+  const [detailedPokemon, setDetailedPokemon] = useState();
+  const [fail, setFail] = useState();
+  const [isLoading, setIsLoading] = useState(true);
 
-    /* const getPokemon = async () => {
-        console.log(id)
-        const poke = await pokeApi.getPokemonInfo(id)
-        return poke;
+  const getPokemon = async () => {
+    const [data, error] = await pokeApi.getPokemonInfo(idPokemon);
+    if (error) {
+      setFail(true);
+      return;
     }
+    setDetailedPokemon(data);
+    console.log(detailedPokemon);
+    setIsLoading(false);
+  };
 
-    const [data] = await useMemo(() => getPokemon(), [id])
+  useEffect(() => {
+    getPokemon();
+  }, [idPokemon]);
 
-    console.log(data) */
-
-
-    return (
-        <>
-            {/* Put this part before </body> tag */}
-            <input type="checkbox" id="my-modal" className="modal-toggle" />
-            <div className="modal">
-                <div className="modal-box">
-                    <h3 className="font-bold text-lg">Congratulations random Internet user!</h3>
-                    <p className="py-4">You've been selected for a chance to get one year of subscription to use Wikipedia for free!</p>
-                    <div className="modal-action">
-                        <label htmlFor="my-modal" className="btn">Yay!</label>
-                    </div>
-                </div>
+  return (
+    <>
+      {/* Put this part before </body> tag */}
+      <input type="checkbox" id="my-modal" className="modal-toggle" />
+      <div className="modal">
+        <div className="modal-box">
+          {isLoading && <div>Loading...</div>}
+          <main className="flex justify-between">
+            <div className="flex flex-col items-start">
+              <h3 className="text-left">
+                Base XP: {detailedPokemon?.base_experience}
+              </h3>
+              <img
+                src={
+                  detailedPokemon?.sprites.other["official-artwork"]
+                    .front_default
+                }
+                alt=""
+                className=" w-40 h-50"
+              />
             </div>
-
-            {/* < input type="checkbox" id="my-modal" className="modal-toggle" />
-            <label htmlFor="my-modal" className="btn">Yay!</label>
-            <div className="modal">
-                <div className="modal-box">
-                    <div
-                        className={`card ${getColorByPokemonType(type[0])} rounded-lg `}
-                        onClick={() => { document.getElementById("my-modal").click() }}
-                    >
-                        <figure className="flex p-5">
-                            <img
-                                className="absolute bottom-2 right-2 w-20 h-30 "
-                                src={image}
-                                alt={name}
-                            />
-                        </figure>
-                        <div className="card-body">
-                            <h2 className="card-title text-slate-900">
-                                {name.toUpperCase()}
-                            </h2>
-                            <div className="card-actions justify-start">
-                                {type.map((type) => (
-                                    <div className="badge badge-primary w-3/12 p-2" key={type}>
-                                        {type}
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
-                    </div>
+            <div className="flex flex-col items-left">
+              {detailedPokemon?.stats.map((stat) => (
+                <div className="flex items-center" key={stat.stat.name}>
+                  <p className="mr-4 text-left">
+                    {stat.stat.name.toUpperCase()}
+                  </p>
+                  <div className="bg-gray-300 h-4 w-full mr-20">
+                    <div className={`bg-blue-500 h-4 w-${stat.base_stat}`} />
+                  </div>
                 </div>
-            </div> */}
-        </>
-    )
-}
+              ))}
+            </div>
+          </main>
 
+          {fail && <div>Error: {fail.message}</div>}
+          <div className="modal-action">
+            <label htmlFor="my-modal" className="btn">
+              Back
+            </label>
+          </div>
+        </div>
+      </div>
+    </>
+  );
+};

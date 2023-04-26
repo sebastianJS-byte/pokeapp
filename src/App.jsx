@@ -1,7 +1,8 @@
 import "./App.css";
 import { useEffect, useState } from "react";
 import { usePokedex } from "./context/PokemonContext.jsx";
-import { GraphPoke, Navbar, PokeList, PokeModal } from "./components";
+import { GraphPoke, Navbar, PokeList } from "./components";
+import { Loader } from "./components/Loader";
 
 function App() {
   const { loadPokemons, urls } = usePokedex();
@@ -9,7 +10,7 @@ function App() {
   const [loading, setLoading] = useState(true);
   async function fetchPokemons() {
     const pokemons = await loadPokemons();
-    setPokemonList(pokemons);
+    setPokemonList((prevState) => [...prevState, ...pokemons]);
     setLoading(false);
   }
   async function handleScroll() {
@@ -19,7 +20,6 @@ function App() {
       const pokemons = await loadPokemons(urls[urls.length - 1]);
       setPokemonList([...pokemonList, ...pokemons]);
       setLoading(false);
-      window.scrollTo(0, 5);
     }
   }
 
@@ -31,10 +31,7 @@ function App() {
   useEffect(() => {
     fetchPokemons();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    return () => {
-      console.log("desmontado");
-    };
-  }, [loadPokemons]);
+  }, []);
 
   return (
     <div>
@@ -43,9 +40,9 @@ function App() {
         <GraphPoke />
       </div>
       <main className="m-8">
-        {loading && "Loading..."}
+        {loading && <Loader />}
         <PokeList pokemons={pokemonList} loading={loading} />
-        <PokeModal />
+        {/* <PokeModal /> */}
       </main>
     </div>
   );

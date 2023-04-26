@@ -1,13 +1,19 @@
 import { pokeApi } from "../api/pokeApi/index.js";
-import { createContext, useContext } from "react";
+import { createContext, useContext, useState } from "react";
 
 const PokemonContext = createContext();
 
-export const  usePokedex = () => useContext(PokemonContext);
+export const usePokedex = () => useContext(PokemonContext);
 // eslint-disable-next-line react/prop-types
 const PokemonProvider = ({ children }) => {
   let pokedex = [];
   let urls = [];
+  const [idPokemon, setIdPokemon] = useState(null);
+
+  function setId(id) {
+    setIdPokemon(id);
+  }
+
   const loadPokemons = async (url) => {
     let pokemons = [];
 
@@ -49,6 +55,8 @@ const PokemonProvider = ({ children }) => {
         loadPokemons,
         urls,
         getPokemonDetail,
+        idPokemon,
+        setId,
       }}
     >
       {children}
