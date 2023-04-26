@@ -18,7 +18,7 @@ function App() {
     if (scrollTop + clientHeight >= scrollHeight) {
       setLoading(true);
       const pokemons = await loadPokemons(urls[urls.length - 1]);
-      setPokemonList([...pokemonList, ...pokemons]);
+      setPokemonList((prevState) => [...prevState, ...pokemons]);
       setLoading(false);
     }
   }
