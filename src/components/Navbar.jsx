@@ -1,9 +1,17 @@
+import { usePokedex } from "../context/PokemonContext";
+
 export const Navbar = () => {
+  const { clearType } = usePokedex();
   return (
     <>
       <div className="navbar bg-neutral text-neutral-content">
         <div className="flex-1">
-          <a className="btn btn-ghost normal-case text-xl">daisyUI</a>
+          <a
+            className="btn btn-ghost normal-case text-xl"
+            onClick={() => clearType}
+          >
+            Pokedex...
+          </a>
         </div>
         <div className="flex-none">
           <div
@@ -25,7 +33,7 @@ export const Navbar = () => {
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth="2"
-                    d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
+                    d="M4 6h16M4 12h16M4 18h7"
                   />
                 </svg>
                 <span className="badge badge-sm indicator-item">8</span>

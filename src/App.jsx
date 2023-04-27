@@ -1,11 +1,12 @@
 import "./App.css";
 import { useEffect, useState } from "react";
 import { usePokedex } from "./context/PokemonContext.jsx";
-import { GraphPoke, Navbar, PokeList } from "./components";
+import { Navbar, PokeList } from "./components";
 import { Loader } from "./components/Loader";
+import GraphPoke from "./components/GraphPoke";
 
 function App() {
-  const { loadPokemons, urls } = usePokedex();
+  const { loadPokemons, urls, typeFilter } = usePokedex();
   const [pokemonList, setPokemonList] = useState([]);
   const [loading, setLoading] = useState(true);
   async function fetchPokemons() {
@@ -22,6 +23,7 @@ function App() {
       setLoading(false);
     }
   }
+  console.log("El typefilter es", typeFilter);
 
   useEffect(() => {
     window.addEventListener("scroll", handleScroll);
@@ -37,12 +39,18 @@ function App() {
     <div>
       <div className="navbar bg-neutral text-neutral-content">
         <Navbar />
-        <GraphPoke />
+        <GraphPoke pokemonData={pokemonList} />
       </div>
       <main className="m-8">
         {loading && <Loader />}
-        <PokeList pokemons={pokemonList} loading={loading} />
-        {/* <PokeModal /> */}
+        <PokeList
+          pokemons={pokemonList
+            .map((pokemon) => pokemon)
+            .filter((pokemon) =>
+              pokemon?.type.map((t) => t.includes(typeFilter))
+            )}
+          loading={loading}
+        />
       </main>
     </div>
   );

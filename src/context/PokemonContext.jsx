@@ -9,7 +9,14 @@ const PokemonProvider = ({ children }) => {
   let pokedex = [];
   let urls = [];
   const [idPokemon, setIdPokemon] = useState(null);
+  const [typeFilter, setTypeFilter] = useState("");
 
+  function setType(type) {
+    setTypeFilter(type);
+  }
+  function clearType() {
+    setTypeFilter("");
+  }
   function setId(id) {
     setIdPokemon(id);
   }
@@ -57,6 +64,9 @@ const PokemonProvider = ({ children }) => {
         getPokemonDetail,
         idPokemon,
         setId,
+        typeFilter,
+        setType,
+        clearType,
       }}
     >
       {children}

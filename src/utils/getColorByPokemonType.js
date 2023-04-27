@@ -1,5 +1,5 @@
-import { POKEMON_TYPE_COLORS } from "./constants";
+import { POKEMON_TYPE_COLORS, POKEMON_COLORS_TYPE } from "./constants";
 
-const getColorByPokemonType = (type) => POKEMON_TYPE_COLORS[type.toLowerCase()];
+export const getColorByPokemonType = (type) => POKEMON_TYPE_COLORS[type.toLowerCase()];
+export const getPokemonColor = (type) => POKEMON_COLORS_TYPE[type.toLowerCase()];
 
-export default getColorByPokemonType;

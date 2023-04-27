@@ -43,7 +43,7 @@ export const PokeModal = () => {
                     .front_default
                 }
                 alt=""
-                className=" w-40 h-50"
+                className="w-40 h-50"
               />
             </div>
             <div className="flex flex-col items-left">
@@ -52,7 +52,7 @@ export const PokeModal = () => {
                   <p className="mr-4 text-left">
                     {stat.stat.name.toUpperCase()}
                   </p>
-                  <div className="bg-gray-300 h-4 w-full mr-20">
+                  <div className="bg-gray-300 h-4 w-full mr-1">
                     <div className={`bg-blue-500 h-4 w-${stat.base_stat}`} />
                   </div>
                 </div>

@@ -1,7 +1,7 @@
 import { useState } from "react";
 /* eslint-disable react/prop-types */
 import { usePokedex } from "../context/PokemonContext";
-import getColorByPokemonType from "../utils/getColorByPokemonType";
+import { getColorByPokemonType } from "../utils/getColorByPokemonType";
 import { PokeModal } from "./PokeModal";
 
 export const PokeCard = ({ type, image, name, id }) => {
@@ -27,11 +27,13 @@ export const PokeCard = ({ type, image, name, id }) => {
           />
         </figure>
         <div className="card-body">
-          <h2 className="card-title text-slate-900">{name.toUpperCase()}</h2>
+          <h2 className="card-title text-slate-900 text-xl">
+            {name.toUpperCase()}
+          </h2>
           <div className="card-actions justify-start">
             {type.map((type) => (
               <div className="badge badge-primary w-3/12 p-2" key={type}>
-                {type}
+                {type.toUpperCase()}
               </div>
             ))}
           </div>
